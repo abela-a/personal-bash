@@ -1,0 +1,83 @@
+#!/usr/bin/bash
+dev="\e[40;38;5;82m Abela \e[30;48;5;82m Dev \e[0m"
+
+function help ()
+{
+  echo -e "\e[38;5;70mAbela Personal Bash \e[0mversion \e[38;5;214m0.1 \e[0m2020-12-14"
+  echo ""
+  echo -e "\e[38;5;214mUsage:\e[0m"
+  echo "  command [option] [arguments]"
+  echo ""
+  echo -e "\e[38;5;214mOptions:\e[0m"
+  echo -e "  \e[38;5;70m-h, --help\e[0m          Show this help message"
+  echo ""
+  echo -e "\e[38;5;214mAvailable commands:\e[0m"
+  echo -e "  \e[38;5;70mdev\e[0m                 Controlling development env"
+}
+
+function help_dev()
+{
+  echo -e "\e[38;5;214mDescription:\e[0m"
+  echo "  Controlling development env"
+  echo ""
+  echo -e "\e[38;5;214mUsage:\e[0m"
+  echo -e "  \e[38;5;70mdev\e[0m"
+  echo ""
+  echo -e "\e[38;5;214mAvailable argument:\e[0m"
+  echo -e "  \e[38;5;70mlocal:up\e[0m                 Activate valet and mysql"
+  echo -e "  \e[38;5;70mlocal:down\e[0m               Deactivate valet and mysql"
+  echo -e "  \e[38;5;70mlocal:restart\e[0m            Restart  valet and mysql"
+}
+
+if [[ -z $1 ]]; then
+
+  help
+
+elif [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
+
+  help
+
+elif [ $1 == 'dev' ]; then
+
+  if [[ $2 == '-h' ]] || [[ $2 == '--help' ]]; then
+
+    help_dev
+  elif [[ $2 == 'local:up' ]]; then
+
+    valet start &&
+      service mysqld start &&
+      clear &&
+      echo -e $dev &&
+      echo -e "\e[38;5;70m Local development has been activated. Happy Coding! :D\e[0m"
+
+  elif [[ $2 == 'local:down' ]]; then
+
+    valet stop &&
+      service mysqld stop &&
+      clear &&
+      echo -e $dev &&
+      echo -e "\e[38;5;70m Local development has been deactivated. See you soon :)\e[0m"
+
+  elif [[ $2 == 'local:restart' ]]; then
+
+    valet restart &&
+      service mysqld restart &&
+      clear &&
+      echo -e $dev &&
+      echo -e "\e[38;5;70m Local development has been restarted. Good luck ;)\e[0m"
+
+  elif [[ -z $2 ]]; then
+
+    help_dev
+
+  else
+
+    echo -e "\e[48;5;1m Command '$1 $2' not found \e[0m"
+
+  fi
+
+else
+
+  echo -e "\e[48;5;1m Command '$1' not found \e[0m"
+
+fi
