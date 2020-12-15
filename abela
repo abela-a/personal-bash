@@ -1,32 +1,51 @@
 #!/usr/bin/bash
-dev="\e[40;38;5;82m Abela \e[30;48;5;82m Dev \e[0m"
+dev="\e[40;38;5;82m Abela \e[30;48;5;82m Personal Bash \e[0m"
+project_dir="~/Coding/Projects"
+version="0.2"
+maintenance="\e[38;5;214mUnder Maintenance :(\e[0m"
+date_created="2020-12-14"
+date_updated="2020-12-15"
 
 function help ()
 {
-  echo -e "\e[38;5;70mAbela Personal Bash \e[0mversion \e[38;5;214m0.1 \e[0m2020-12-14"
-  echo ""
+  echo -e "\e[38;5;70mAbela Personal Bash \e[0mversion \e[38;5;214m${version} \e[0m${date_updated}"
+  echo
   echo -e "\e[38;5;214mUsage:\e[0m"
   echo "  command [option] [arguments]"
-  echo ""
+  echo
   echo -e "\e[38;5;214mOptions:\e[0m"
   echo -e "  \e[38;5;70m-h, --help\e[0m          Show this help message"
-  echo ""
+  echo -e "  \e[38;5;70m-v, --version\e[0m       Display this bash version"
+  echo
   echo -e "\e[38;5;214mAvailable commands:\e[0m"
+  echo -e "  \e[38;5;70mabout\e[0m               Show information about this bash"
   echo -e "  \e[38;5;70mdev\e[0m                 Controlling development env"
+  echo -e "  \e[38;5;70mprojects\e[0m            Go to projects directory"
+  echo -e "  \e[38;5;70mvscode\e[0m              Open vs code in current dir and clear the screen"
 }
 
 function help_dev()
 {
   echo -e "\e[38;5;214mDescription:\e[0m"
   echo "  Controlling development env"
-  echo ""
+  echo
   echo -e "\e[38;5;214mUsage:\e[0m"
-  echo -e "  \e[38;5;70mdev\e[0m"
-  echo ""
+  echo -e "  \e[38;5;70mdev\e[0m [argument]"
+  echo
   echo -e "\e[38;5;214mAvailable argument:\e[0m"
   echo -e "  \e[38;5;70mlocal:up\e[0m                 Activate valet and mysql"
   echo -e "  \e[38;5;70mlocal:down\e[0m               Deactivate valet and mysql"
   echo -e "  \e[38;5;70mlocal:restart\e[0m            Restart  valet and mysql"
+}
+
+function about()
+{
+  echo -e $dev
+  echo
+  echo 'This is just my personal bash for speed up my development.'
+  echo 'You can modify and use it as you want. (MIT LICENSE)'
+  echo
+  echo 'Find me on github : https://github.com/abela-a'
 }
 
 if [[ -z $1 ]]; then
@@ -37,11 +56,32 @@ elif [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
 
   help
 
-elif [ $1 == 'dev' ]; then
+elif [[ $1 == '-v' ]] || [[ $1 == '--version' ]]; then
+
+  echo -e "\e[38;5;70mAbela Personal Bash \e[0mversion \e[38;5;214m${version} \e[0m${date_updated}"
+
+elif [[ $1 == 'about' ]]; then
+
+  about
+
+elif [[ $1 == 'projects' ]]; then
+
+  echo -e $maintenance
+
+elif [[ $1 == 'vscode' ]]; then
+
+  code .
+  clear
+  echo -e $dev
+  echo -e "\e[38;5;70m Happy Coding! :D\e[0m"
+
+
+elif [[ $1 == 'dev' ]]; then
 
   if [[ $2 == '-h' ]] || [[ $2 == '--help' ]]; then
 
     help_dev
+
   elif [[ $2 == 'local:up' ]]; then
 
     valet start &&
